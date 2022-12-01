@@ -1,0 +1,1 @@
+print(*[sum(sorted([sum(map(int, e.splitlines()))for e in open('1.in').read().split('\n\n')])[-x:])for x in(1,3)],sep='\n')
