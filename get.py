@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 cookie = os.getenv('AOC_COOKIE')
+email = os.getenv("EMAIL")
 
 WARNING_MESSAGE = "Please don't repeatedly request this endpoint before it unlocks! The calendar countdown is " \
                   "synchronized with the server time; the link will be enabled on the calendar the instant this " \
@@ -22,7 +23,9 @@ def progress_bar(year, day):
 
 def get_input(year, day):
     url = f"https://adventofcode.com/{year}/day/{day}/input"
-    r = requests.get(url, cookies={"session": cookie})
+    r = requests.get(url, cookies={"session": cookie},
+                     headers={"From": f"George Barrell ({email}) ",
+                              "User-Agent": "https://github.com/RogerGabeller-ml/advent-of-code/blob/master/get.py"})
     return r.text
 
 
