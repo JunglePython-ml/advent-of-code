@@ -33,12 +33,12 @@ def get_all():
     years = time.localtime().tm_year
     for year in range(2015, years + 1):
         for day in range(1, time.localtime().tm_mday + 1 if year == years else 26):
-            if not os.path.exists(f"{year}/{day}.in"):
+            if not os.path.exists(f"./{year}/{day}.in"):
                 inp = get_input(year, day)
                 if inp == WARNING_MESSAGE:
                     print("\nChallenge not unlocked yet.")
                     return
-                with open(f"{year}/{day}.in", "w") as input_file:
+                with open(f"./{year}/{day}.in", "w") as input_file:
                     input_file.write(inp)
             progress_bar(year, day)
 
@@ -46,11 +46,11 @@ def get_all():
 if __name__ == "__main__":
     if len(sys.argv) == 3:
         y, d = sys.argv[1:]
-        with open(f"{y}/{d}.in", "w") as f:
+        with open(f"./{y}/{d}.in", "w") as f:
             f.write(get_input(y, d))
     else:
         for y in range(2015, time.localtime().tm_year + 1):
-            if not os.path.exists(f"{y}"):
+            if not os.path.exists(f"./{y}"):
                 os.mkdir(f"{y}")
         get_all()
     print()
