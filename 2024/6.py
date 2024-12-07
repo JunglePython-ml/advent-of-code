@@ -10,12 +10,12 @@ with open('6.in') as f:
     grid = np.array(data)
 
 
-directions = cycle([(-1,0), (0,1), (1,0), (0,-1)])
+directions = cycle(((-1,0), (0,1), (1,0), (0,-1)))
 direction = next(directions)
 pos = START
 
-seen = set()
-seen.add(pos)
+p1_seen = set()
+p1_seen.add(pos)
 while True:
     candidate_pos = (pos[0] + direction[0], pos[1] + direction[1])
     if candidate_pos[0] < 0 or candidate_pos[0] >= grid.shape[0] or candidate_pos[1] < 0 or candidate_pos[1] >= grid.shape[1]:
@@ -25,11 +25,11 @@ while True:
         continue
     if grid[candidate_pos] == 0:
         pos = candidate_pos
-        seen.add(pos)
-print(len(seen))
+        p1_seen.add(pos)
+print(len(p1_seen))
 
 def find_path(grid, pos, directions):
-    directions = cycle([(-1,0), (0,1), (1,0), (0,-1)])
+    directions = cycle(((-1,0), (0,1), (1,0), (0,-1)))
     direction = next(directions)
     pos = START
     seen = set()
@@ -48,11 +48,9 @@ def find_path(grid, pos, directions):
             seen.add((pos, direction))
 
 ans = 0
-for i in range(grid.shape[0]):
-    for j in range(grid.shape[1]):
-        if grid[i,j] == 0:
-            grid[i,j] = 1
-            if find_path(grid, pos, directions):
-                ans += 1
-            grid[i,j] = 0
+for i,j in p1_seen:
+    grid[i,j] = 1
+    if find_path(grid, pos, directions):
+        ans += 1
+    grid[i,j] = 0
 print(ans)
